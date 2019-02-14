@@ -36,15 +36,15 @@ public class SnakeRunner extends JPanel
 		
 		public static void main(String[] args)
 			{
+				SnakeRunner ex = new SnakeRunner();
 				UploadScores.readScores("Snake");
 				UploadScores.createDefaultScores();
 				highScores.trimToSize();
 				snake.add(new Body(0,0));
 				JFrame frame = new JFrame("Snake");
 		        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		        SnakeRunner ex = new SnakeRunner();
 		        frame.add(ex);
-		        frame.setSize(xSize, ySize);
+		        frame.setSize(931, 828);
 		        frame.setResizable(false);
 		        frame.setVisible(true);
 		        ex.setFocusable(true);	

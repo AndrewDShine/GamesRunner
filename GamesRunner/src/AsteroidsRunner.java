@@ -10,28 +10,28 @@ import java.util.Scanner;
 @SuppressWarnings("serial")
 public class AsteroidsRunner extends JPanel
 	{		
-		static int counter = 0;
-		final static String [] alphaBET= {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-		final static int [] alphaBETCounter = {0, 0, 0};
+		public int counter = 0;
+		public final String [] alphaBET= {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+		public final int [] alphaBETCounter = {0, 0, 0};
 		//score selection variables
-		static ArrayList<Score> highScores = new ArrayList<Score>(10);
-		static Ship player = new Ship(0.00);
-		static Ship shimage = new Ship((Math.PI * 3) / 2);
-		static ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-		static ArrayList<Bullet> enemyBullets = new ArrayList<Bullet>();
-		static ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
-		static ArrayList<UFO> enemies = new ArrayList<UFO>();
-		static ArrayList<Asteroid> shrapnel = new ArrayList<Asteroid>();
-		static Scanner userInput = new Scanner(System.in);
-		static boolean firing;
-		static int level = 3;
-		static int choice;
-		static int tick=0;
-		static int score =0;
-		static int stage = 0;
-		static boolean[] showingStrings = {false, false};
+		public ArrayList<Score> highScores = new ArrayList<Score>(10);
+		public Ship player = new Ship(0.00);
+		public Ship shimage = new Ship((Math.PI * 3) / 2);
+		public ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+		public ArrayList<Bullet> enemyBullets = new ArrayList<Bullet>();
+		public ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+		public ArrayList<UFO> enemies = new ArrayList<UFO>();
+		public ArrayList<Asteroid> shrapnel = new ArrayList<Asteroid>();
+		public Scanner userInput = new Scanner(System.in);
+		public boolean firing;
+		public int level = 3;
+		public int choice;
+		public int tick=0;
+		public int score =0;
+		public int stage = 0;
+		public boolean[] showingStrings = {false, false};
 		
-		public static void main(String[] args)
+		public void main()
 		{
 			UploadScores.readScores("Ast");
 			UploadScores.createDefaultScores();
@@ -706,7 +706,7 @@ public class AsteroidsRunner extends JPanel
 						 g.drawRect(x + 7, y + 14, 1, 1); 
 					 }
 			 }
-		 public static void restart()
+		 public void restart()
 		 {
 			 asteroids.clear();
 			 enemies.clear();

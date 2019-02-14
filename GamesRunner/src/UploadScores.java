@@ -6,7 +6,7 @@ import java.util.*;
 
 public class UploadScores
 	{
-		public static void writeScores()
+		public static void writeScores(Object o)
 		{
 			String filename = "HighScores.ser";
 			ArrayList<Score> tempHighScores = new ArrayList<Score>();
