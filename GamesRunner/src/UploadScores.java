@@ -30,9 +30,9 @@ public class UploadScores
 				}
 			AsteroidsRunner.highScores=tempHighScores;
 		}
-		public static void readScores()
+		public static void readScores(String game)
 		{
-			String filename ="HighScores.ser";
+			String filename = game + "HighScores.ser";
 			ArrayList<Score> tempHighScores2 = new ArrayList<Score>();
 			
 			try

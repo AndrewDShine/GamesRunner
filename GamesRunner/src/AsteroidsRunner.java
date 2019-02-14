@@ -33,7 +33,7 @@ public class AsteroidsRunner extends JPanel
 		
 		public static void main(String[] args)
 		{
-			UploadScores.readScores();
+			UploadScores.readScores("Ast");
 			UploadScores.createDefaultScores();
 			highScores.trimToSize();
 			Asteroid.generateAsteroids();

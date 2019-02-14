@@ -36,7 +36,7 @@ public class SnakeRunner extends JPanel
 		
 		public static void main(String[] args)
 			{
-				UploadScores.readScores();
+				UploadScores.readScores("Snake");
 				UploadScores.createDefaultScores();
 				highScores.trimToSize();
 				snake.add(new Body(0,0));
@@ -53,7 +53,7 @@ public class SnakeRunner extends JPanel
 			 {
 				
 				UploadScores.writeScores();
-				UploadScores.readScores();
+				UploadScores.readScores("Snake");
 		        setBackground(Color.BLACK);
 		        addKeyListener(new KeyAdapter() 
 		        {
