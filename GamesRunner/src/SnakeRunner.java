@@ -11,7 +11,7 @@ public class SnakeRunner extends JPanel
 	{
 		final static String [] alphaBET= {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 		//Alphabet Array
-		static ArrayList<Score> highScores = new ArrayList<Score>();
+		static ArrayList<Score> highScores = new ArrayList<Score>(10);
 		//Main Snake Object
 		static ArrayList<Body> snake = new ArrayList<Body>();
 		//Primitives, holding various game info
@@ -37,6 +37,8 @@ public class SnakeRunner extends JPanel
 		public static void main(String[] args)
 			{
 				UploadScores.readScores();
+				UploadScores.createDefaultScores();
+				highScores.trimToSize();
 				snake.add(new Body(0,0));
 				JFrame frame = new JFrame("Snake");
 		        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
