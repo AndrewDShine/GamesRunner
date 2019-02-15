@@ -1,5 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -7,40 +12,39 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 @SuppressWarnings("serial")
-public class SnakeRunner extends JPanel
+public class SnakeRunner extends JPanel implements Scorable
 	{
-		final static String [] alphaBET= {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+		public final String [] alphaBET= {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 		//Alphabet Array
-		static ArrayList<Score> highScores = new ArrayList<Score>(10);
+		public ArrayList<Score> highScores = new ArrayList<Score>(10);
 		//Main Snake Object
-		static ArrayList<Body> snake = new ArrayList<Body>();
+		public ArrayList<Body> snake = new ArrayList<Body>();
 		//Primitives, holding various game info
-		static int xSize = 931;
-		static int ySize = 828;
-		static int score = snake.size()-1;
-		static int fruitsEaten = 0;
-		static int stage = 0;
-		static boolean needsFruit = true;
-		static int counter = 0;
-		final static int [] alphaBETCounter = {0, 0, 0};
+		public int xSize = 931;
+		public int ySize = 828;
+		public int score = snake.size()-1;
+		public int fruitsEaten = 0;
+		public int stage = 0;
+		public boolean needsFruit = true;
+		public int counter = 0;
+		public final int [] alphaBETCounter = {0, 0, 0};
 		//Objects holding more game info
-		static String dir = "stopped";
-		static Body fruit = new Body(xSize + 25, ySize + 25);
-		static int tickCounter = 0;
-		static String title= "SNAKE";
-		static String shownTitle = "";
-		static String credits = "A GAME BY ANDREW AND JOSH";
-		static String shownCredits = "";
-		static String start = "PRESS ENTER TO START";
-		static String shownStart = "";
+		public String dir = "stopped";
+		public Body fruit = new Body(xSize + 25, ySize + 25);
+		public int tickCounter = 0;
+		public String title= "SNAKE";
+		public String shownTitle = "";
+		public String credits = "A GAME BY ANDREW AND JOSH";
+		public String shownCredits = "";
+		public String start = "PRESS ENTER TO START";
+		public String shownStart = "";
 		
-		public static void main(String[] args)
+		public void run()
 			{
 				SnakeRunner ex = new SnakeRunner();
-				UploadScores.readScores("Snake");
-				UploadScores.createDefaultScores();
+				readScores();
+				createDefaultScores();
 				highScores.trimToSize();
-				snake.add(new Body(0,0));
 				JFrame frame = new JFrame("Snake");
 		        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		        frame.add(ex);
@@ -51,9 +55,9 @@ public class SnakeRunner extends JPanel
 			}
 		 public SnakeRunner()
 			 {
-				
-				UploadScores.writeScores();
-				UploadScores.readScores("Snake");
+				snake.add(new Body(0,0));
+				writeScores();
+				readScores();
 		        setBackground(Color.BLACK);
 		        addKeyListener(new KeyAdapter() 
 		        {
@@ -140,9 +144,9 @@ public class SnakeRunner extends JPanel
 		                				if(stage==4)
 		                					{
 		                						highScores.add(new Score((snake.size()-1), (alphaBET[alphaBETCounter[0]]+alphaBET[alphaBETCounter[1]]+alphaBET[alphaBETCounter[2]])));
-		                						Collections.sort(SnakeRunner.highScores, new ScoreSorter());
-		                						Collections.reverse(SnakeRunner.highScores);
-		                						UploadScores.writeScores();
+		                						Collections.sort(highScores, new ScoreSorter());
+		                						Collections.reverse(highScores);
+		                						writeScores();
 		                					}
 		                			}
 		                		if(stage == 5)
@@ -503,5 +507,72 @@ public class SnakeRunner extends JPanel
 					 g.drawRect(x + 7, y + 14, 1, 1); 
 				 }
 		 }
+
+		public void writeScores()
+			{
+				String filename = "SnakeHighScores.ser";
+				ArrayList<Score> tempHighScores = new ArrayList<Score>();
+				
+				try
+					{
+						FileOutputStream file = new FileOutputStream(filename);
+						ObjectOutputStream out = new ObjectOutputStream(file);
+						
+						tempHighScores = highScores;
+
+						out.writeObject(tempHighScores);
+						
+						out.close();
+						file.close();
+					}
+				
+				catch(Exception e)
+					{
+						System.out.println("b e t");
+					}
+				highScores=tempHighScores;
+			}
+
+		public void readScores()
+			{
+				String filename = "SnakeHighScores.ser";
+				ArrayList<Score> tempHighScores2 = new ArrayList<Score>();
+				
+				try
+					{
+				FileInputStream file= new FileInputStream(filename);
+				ObjectInputStream in = new ObjectInputStream(file);
+				
+				tempHighScores2=(ArrayList<Score>)in.readObject();
+				highScores= tempHighScores2;
+				
+
+				
+				in.close();
+				file.close();
+					}
+				catch(Exception e)
+					{
+//						System.out.println("b e     t");
+					}
+				
+			
+				Collections.sort(highScores, new ScoreSorter());
+				Collections.reverse(highScores);
+			}
+
+		public void createDefaultScores()
+			{
+				highScores.add(new Score(1, "WIL"));
+				highScores.add(new Score(2, "FRE"));
+				highScores.add(new Score(3, "GAR"));
+				highScores.add(new Score(4, "JAN"));
+				highScores.add(new Score(5, "BAR"));
+				highScores.add(new Score(6, "JON"));
+				highScores.add(new Score(7, "JEF"));
+				highScores.add(new Score(8, "CAL"));
+				highScores.add(new Score(9, "AND"));
+				highScores.add(new Score(10,"JOS"));
+			}
 	}
 

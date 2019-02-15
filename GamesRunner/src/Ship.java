@@ -130,8 +130,6 @@ public class Ship extends SpaceObject
 				angle = 0.00;
 				respawning = false;
 			}
-		if(respawning)
-			AsteroidsRunner.firing = false;
 		
 		if(!respawning)
 			{
@@ -197,8 +195,6 @@ public class Ship extends SpaceObject
 		if(lives <= 0)
 			{
 				delayTicks = Integer.MAX_VALUE;
-				AsteroidsRunner.stage=2;
-				AsteroidsRunner.restart();
 			}
 	}
 	}

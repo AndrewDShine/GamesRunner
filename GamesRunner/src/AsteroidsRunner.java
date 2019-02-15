@@ -1,5 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -8,7 +13,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 @SuppressWarnings("serial")
-public class AsteroidsRunner extends JPanel
+public class AsteroidsRunner extends JPanel implements Scorable
 	{		
 		public int counter = 0;
 		public final String [] alphaBET= {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
@@ -31,12 +36,11 @@ public class AsteroidsRunner extends JPanel
 		public int stage = 0;
 		public boolean[] showingStrings = {false, false};
 		
-		public void main()
+		public void run()
 		{
-			UploadScores.readScores("Ast");
-			UploadScores.createDefaultScores();
+			readScores();
+			createDefaultScores();
 			highScores.trimToSize();
-			Asteroid.generateAsteroids();
 			JFrame frame = new JFrame("Asteroids");
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setSize(1013, 913);
@@ -139,7 +143,7 @@ public class AsteroidsRunner extends JPanel
 									highScores.add(new Score(score, (alphaBET[alphaBETCounter[0]]+alphaBET[alphaBETCounter[1]]+alphaBET[alphaBETCounter[2]])));
 									Collections.sort(highScores, new ScoreSorter());
 									Collections.reverse(highScores);
-									UploadScores.writeScores();
+									writeScores();
 									stage++;
 									break;
 								case 4:
@@ -181,7 +185,7 @@ public class AsteroidsRunner extends JPanel
 	        			case 0:
 	        				while(asteroids.size() < 12)
 	        					{
-	        						Asteroid.generateAsteroids();
+	        						generateAsteroids();
 	        					}
 	        				for(int a = 0; a < asteroids.size(); a++)
 	        					{
@@ -271,6 +275,11 @@ public class AsteroidsRunner extends JPanel
 	    	        			{
 	    	        				gc.add(enemyBullets.get(b));
 	    		        			player.die();
+	    		        			if(player.getLives() <= 0)
+	        							{
+	        								stage=2;
+	    	        						restart();
+	        							}
 	    		        			break;
 	    	        			}
 	    	        		}
@@ -398,6 +407,11 @@ public class AsteroidsRunner extends JPanel
 	            								}
 	            							gc.add(asteroids.get(i));
 	    	        						player.die();
+	    	        						if(player.getLives() <= 0)
+	    	        							{
+	    	        								stage=2;
+	    	    	        						restart();
+	    	        							}
 	    	        					}
 	    	        			}
 	    	        		for(SpaceObject a: gc)
@@ -418,7 +432,7 @@ public class AsteroidsRunner extends JPanel
 	    	        				for(int i = 0; i < level; i++)
 	    	        					{
 //	    	        						System.out.println(level);
-	    	        						Asteroid.generateAsteroids();
+	    	        						generateAsteroids();
 	    	        					}
 //	    	        				Asteroid.generateAsteroids();
 	    	        			}
@@ -670,6 +684,52 @@ public class AsteroidsRunner extends JPanel
 			}
 			
 		}
+		public void generateAsteroids()
+			{
+//				for(int i=0; i<1; i++)
+//					{
+						boolean isXValid = false;
+						boolean isYValid = false;
+						boolean isAngleValid = false;
+						double randAngle = 0;
+						int randomX	= 0;	
+						int randomY	= 0;
+						while(!isXValid&&!isYValid)
+						{
+						randomX	= (int)Math.random()*1013;
+						randomY	= (int)Math.random()*913;
+
+						
+						if((randomX<=300)||(randomX>=600))
+							{
+								isXValid=true;
+							}
+						if((randomY<=300)||(randomY>=600))
+							{
+								isXValid=true;
+							}
+						}
+						
+						while(!isAngleValid)
+						{
+						randAngle = (Math.random() * (Math.PI * 2));
+						int counter=0;
+						for(Asteroid a : asteroids)
+							{
+							if(a.getAngle()==randAngle)
+								{
+									counter+=1;
+								}
+							}
+						if(counter<1)
+							{
+							isAngleValid=true;	
+							}
+						}
+						asteroids.add(new Asteroid(randAngle, 50, 50, new Vector(randomX, randomY)));
+//					}
+
+			}
 		public boolean checkPolyIntersect(Polygon p1, Polygon p2)
 	    {
 	        Point p;
@@ -715,6 +775,73 @@ public class AsteroidsRunner extends JPanel
 			 shrapnel.clear();
 			 player = new Ship(0.00);
 		 }
+
+		public void writeScores()
+			{
+				String filename = "AstHighScores.ser";
+				ArrayList<Score> tempHighScores = new ArrayList<Score>();
+				
+				try
+					{
+						FileOutputStream file = new FileOutputStream(filename);
+						ObjectOutputStream out = new ObjectOutputStream(file);
+						
+						tempHighScores = highScores;
+
+						out.writeObject(tempHighScores);
+						
+						out.close();
+						file.close();
+					}
+				
+				catch(Exception e)
+					{
+						System.out.println("b e t");
+					}
+				highScores=tempHighScores;
+			}
+
+		public void readScores()
+			{
+				String filename = "AstHighScores.ser";
+				ArrayList<Score> tempHighScores2 = new ArrayList<Score>();
+				
+				try
+					{
+				FileInputStream file= new FileInputStream(filename);
+				ObjectInputStream in = new ObjectInputStream(file);
+				
+				tempHighScores2=(ArrayList<Score>)in.readObject();
+				highScores= tempHighScores2;
+				
+
+				
+				in.close();
+				file.close();
+					}
+				catch(Exception e)
+					{
+//						System.out.println("b e     t");
+					}
+				
+			
+				Collections.sort(highScores, new ScoreSorter());
+				Collections.reverse(highScores);
+			}
+
+		public void createDefaultScores()
+			{
+				highScores.add(new Score(1, "WIL"));
+				highScores.add(new Score(2, "FRE"));
+				highScores.add(new Score(3, "GAR"));
+				highScores.add(new Score(4, "JAN"));
+				highScores.add(new Score(5, "BAR"));
+				highScores.add(new Score(6, "JON"));
+				highScores.add(new Score(7, "JEF"));
+				highScores.add(new Score(8, "CAL"));
+				highScores.add(new Score(9, "AND"));
+				highScores.add(new Score(10,"JOS"));
+			}
 		
 
 	}
