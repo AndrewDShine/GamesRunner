@@ -9,11 +9,19 @@ import java.util.Scanner;
 
 public class RunnerRunner extends JPanel
 	{
-
+		static Scanner userInput = new Scanner(System.in);
 		public static void main(String[] args)
 			{
-				SnakeRunner ast = new SnakeRunner();
-				ast.run();
+				if(userInput.nextLine().equals("Snake"))
+					{
+						SnakeRunner sna = new SnakeRunner();
+						sna.run();	
+					}
+				else
+					{
+						AsteroidsRunner ast = new AsteroidsRunner();
+						ast.run();
+					}
 			}
 
 	}
