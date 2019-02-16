@@ -656,15 +656,15 @@ public class AsteroidsRunner extends JPanel implements Scorable
 					 g.setFont(restart);
 					 g.drawString("PRESS ENTER TO RESTART", 180, 750);
 					 
-					 for(int i=0 ; i<10; i++)
+					 for(Score i: highScores)
 						 {
 							 g.setColor(Color.white);
 							 g.setFont(scores);
-							 g.drawString(highScores.get(i).getName(), 366, tempY);
+							 g.drawString(i.getName(), 366, tempY);
 							 
 							 g.setColor(Color.white);
 							 g.setFont(scores);
-							 g.drawString(String.valueOf(highScores.get(i).getScore()), 496, tempY);
+							 g.drawString(String.valueOf(i.getScore()), 496, tempY);
 							 
 							 tempY+=50;
 						 }
