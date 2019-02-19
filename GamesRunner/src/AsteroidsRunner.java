@@ -123,7 +123,7 @@ public class AsteroidsRunner extends JPanel implements Scorable
 	                			}
 							break;
 						case KeyEvent.VK_SPACE:
-							if(stage==1)
+							if(stage==1 && !player.isRespawning())
 								firing = true;
 							break;
 						case KeyEvent.VK_ENTER:
@@ -202,6 +202,10 @@ public class AsteroidsRunner extends JPanel implements Scorable
 	        				tick++;
 	        				break;
 	        			case 1:
+	        				if(player.isRespawning())
+	        					{
+	        						firing = false;
+	        					}
 	        				ArrayList<SpaceObject> gc = new ArrayList<SpaceObject>();
 	    	        		ArrayList<SpaceObject> gc2 = new ArrayList<SpaceObject>();
 	    	        		player.tick();
