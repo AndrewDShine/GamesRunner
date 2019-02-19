@@ -42,7 +42,7 @@ public class AsteroidsRunner extends JPanel implements Scorable
 			createDefaultScores();
 			highScores.trimToSize();
 			JFrame frame = new JFrame("Asteroids");
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			frame.setSize(1013, 913);
 			AsteroidsRunner game = new AsteroidsRunner();
 			frame.add(game);

@@ -46,7 +46,7 @@ public class SnakeRunner extends JPanel implements Scorable
 				createDefaultScores();
 				highScores.trimToSize();
 				JFrame frame = new JFrame("Snake");
-		        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		        frame.add(ex);
 		        frame.setSize(931, 828);
 		        frame.setResizable(false);
