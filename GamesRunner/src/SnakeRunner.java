@@ -134,9 +134,6 @@ public class SnakeRunner extends JPanel implements Scorable
 		                					}
 		                			}
 		                		break;
-		                	case KeyEvent.VK_SPACE:
-		                		dir = "stopped";
-		                		break;
 		                	case KeyEvent.VK_ENTER:
 		                		if(stage != 1 && stage != 5)
 		                			{

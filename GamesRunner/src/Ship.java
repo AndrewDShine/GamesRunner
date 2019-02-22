@@ -11,6 +11,7 @@ public class Ship extends SpaceObject
 		private int lives;
 		private int delayTicks;
 		private boolean respawning;
+		private boolean invuln;
 		
 	public Ship(double angle)
 	{
@@ -31,6 +32,14 @@ public class Ship extends SpaceObject
 		updatePoints();
 	}
 
+	public boolean isInvuln()
+		{
+			return invuln;
+		}
+	public void setInvuln(boolean i)
+		{
+			invuln = i;
+		}
 	public boolean isRespawning()
 		{
 			return respawning;
