@@ -138,10 +138,17 @@ public class Ship extends SpaceObject
 				vel = new Vector(0,0);
 				angle = 0.00;
 				respawning = false;
+				invuln = true;
+				delayTicks = getTickCounter();
 			}
 		
 		if(!respawning)
 			{
+				if(invuln && tickCounter - delayTicks >= 300)
+					{
+						delayTicks = 0;
+						invuln = false;
+					}
 				if(isRot > 0)
 					{
 						angle += ROTATION_SPEED;

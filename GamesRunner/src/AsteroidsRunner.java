@@ -275,7 +275,7 @@ public class AsteroidsRunner extends JPanel implements Scorable
 	    	        			}
 	    	        		for(int b = 0; b < enemyBullets.size(); b++)
 	    	        		{
-	    	        			if(player.getAstBounds().contains(enemyBullets.get(b).getPos().getX(), enemyBullets.get(b).getPos().getY()))
+	    	        			if(player.getAstBounds().contains(enemyBullets.get(b).getPos().getX(), enemyBullets.get(b).getPos().getY()) && !player.isInvuln())
 	    	        			{
 	    	        				gc.add(enemyBullets.get(b));
 	    		        			player.die();
@@ -357,7 +357,7 @@ public class AsteroidsRunner extends JPanel implements Scorable
 	    	        							break;
 	    	        						}
 	    	        					}
-	    	        				if(checkPolyIntersect(player.getAstBounds(), asteroids.get(i).getAstBounds()))
+	    	        				if(checkPolyIntersect(player.getAstBounds(), asteroids.get(i).getAstBounds()) && !player.isInvuln())
 	    	        					{
 	    	        						if(asteroids.get(i).getSize1()==50)
 	            								{
@@ -541,13 +541,18 @@ public class AsteroidsRunner extends JPanel implements Scorable
 					g.setColor(Color.white);
 					g.setFont(f2);
 					g.drawString(String.valueOf(score), (990-scoreDigits), 30);
-					g.setColor(Color.WHITE);
+					if(player.isInvuln())
+						g.setColor(Color.GRAY);
 					g.drawPolygon(player.getAstBounds());
+					g.setColor(Color.WHITE);
 //					g.drawRect(asteroids.get(0).getPos().getX(), asteroids.get(0).getPos().getY(), 1, 1);
 
 					if(player.isAcc() == true && !player.isRespawning())
 						{
+							if(player.isInvuln())
+								g.setColor(Color.GRAY);
 							g.drawPolygon(player.getFireX(), player.getFireY(), 3);
+							g.setColor(Color.WHITE);
 						}
 					for(Bullet b: bullets)
 						{
