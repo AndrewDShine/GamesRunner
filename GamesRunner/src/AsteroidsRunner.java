@@ -62,6 +62,7 @@ public class AsteroidsRunner extends JPanel implements Scorable
 					switch(e.getKeyCode())
 					{
 						case KeyEvent.VK_UP:
+						case KeyEvent.VK_W:
 							if(stage==1)
 								player.setAcc(true);
 							
@@ -78,6 +79,7 @@ public class AsteroidsRunner extends JPanel implements Scorable
 	                			}
 							break;
 						case KeyEvent.VK_DOWN:
+						case KeyEvent.VK_S:
 							if(stage == 3)
 	                			{
 	                				if(alphaBETCounter[counter]==0)
@@ -91,6 +93,7 @@ public class AsteroidsRunner extends JPanel implements Scorable
 	                			}
 							break;
 						case KeyEvent.VK_RIGHT:
+						case KeyEvent.VK_D:
 							if(stage==1)
 								player.setIsRot(1);
 							
@@ -107,6 +110,7 @@ public class AsteroidsRunner extends JPanel implements Scorable
 	                			}
 							break;
 						case KeyEvent.VK_LEFT:
+						case KeyEvent.VK_A:
 							if(stage==1)
 								player.setIsRot(-1);
 							
@@ -162,12 +166,15 @@ public class AsteroidsRunner extends JPanel implements Scorable
 					switch(e.getKeyCode())
 					{
 					case KeyEvent.VK_UP:
+					case KeyEvent.VK_W:
 						player.setAcc(false);
 						break;
 					case KeyEvent.VK_RIGHT:
+					case KeyEvent.VK_D:
 						player.setIsRot(0);
 						break;
 					case KeyEvent.VK_LEFT:
+					case KeyEvent.VK_A:
 						player.setIsRot(0);
 						break;
 					case KeyEvent.VK_SPACE:
